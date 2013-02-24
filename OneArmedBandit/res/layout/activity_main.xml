@@ -10,10 +10,11 @@
 
     <ImageView
         android:id="@+id/imageView1"
+        android:contentDescription="@string/desc"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/apple" />
+        android:src="@anim/fruit1" />
 
 </RelativeLayout>
