@@ -36,11 +36,11 @@ public class MainActivity extends Activity implements OnClickListener
 		this.fruitAnimation1 = (AnimationDrawable) this.fruitView1.getBackground();
 		
 		this.fruitView2 = (ImageView) this.findViewById(R.id.ImageView02);
-		this.fruitView2.setBackgroundResource(R.anim.fruit);
+		this.fruitView2.setBackgroundResource(R.anim.fruit2);
 		this.fruitAnimation2 = (AnimationDrawable) this.fruitView2.getBackground();
 		
 		this.fruitView3 = (ImageView) this.findViewById(R.id.ImageView03);
-		this.fruitView3.setBackgroundResource(R.anim.fruit);
+		this.fruitView3.setBackgroundResource(R.anim.fruit3);
 		this.fruitAnimation3 = (AnimationDrawable) this.fruitView3.getBackground();
 		
 	}
