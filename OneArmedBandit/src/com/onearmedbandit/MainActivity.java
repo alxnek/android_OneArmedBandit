@@ -19,7 +19,7 @@ public class MainActivity extends Activity implements OnClickListener
 
 	AnimationDrawable fruitAnimation1,fruitAnimation2,fruitAnimation3;
 	ImageView fruitView1,fruitView2,fruitView3;
-	Button b;
+	Button b1,b2,b3,bStart;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -28,8 +28,8 @@ public class MainActivity extends Activity implements OnClickListener
 		this.setContentView(R.layout.activity_main);
 		Log.v(TAG, "Create layout");
 		
-//		this.b = (Button) this.findViewById(R.id.button1);
-//		b.setOnClickListener(this);
+		this.bStart = (Button) this.findViewById(R.id.buttonStart);
+		bStart.setOnClickListener(this);
 		
 		this.fruitView1 = (ImageView) this.findViewById(R.id.ImageView01);
 		this.fruitView1.setBackgroundResource(R.anim.fruit);
@@ -54,9 +54,7 @@ public class MainActivity extends Activity implements OnClickListener
 	public boolean onTouchEvent(MotionEvent event)
 	{
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			this.fruitAnimation1.start();
-			this.fruitAnimation2.start();
-			this.fruitAnimation3.start();
+		
 			Log.v(TAG, "TOUCH detected");
 			return true;
 		}
@@ -75,7 +73,13 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		//fruitAnimation1.start();
+		if (v == bStart){
+			
+			this.fruitAnimation1.start();
+			this.fruitAnimation2.start();
+			this.fruitAnimation3.start();
+		}
+		//
 		
 		// TODO Auto-generated method stub
 		
