@@ -1,5 +1,6 @@
 package com.onearmedbandit;
 
+
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ public class MainActivity extends Activity implements OnClickListener
 {
 
 	private final static String TAG = "MainActivity";
-
+	
+	private MyThread t1,t2,t3 = null;
+	
 	AnimationDrawable fruitAnimation1, fruitAnimation2, fruitAnimation3;
 	ImageView fruitView1, fruitView2, fruitView3;
 	Button b1, b2, b3, bStart;
@@ -82,19 +85,28 @@ public class MainActivity extends Activity implements OnClickListener
 			this.fruitAnimation1.start();
 			this.fruitAnimation2.start();
 			this.fruitAnimation3.start();
+			this.t1 = new MyThread();
+			this.t1.start();
+			this.t2 = new MyThread();
+			this.t2.start();
+			this.t3 = new MyThread();
+			this.t3.start();
 		}
 
 		if (v == this.b1) {
 
 			this.fruitAnimation1.stop();
+			this.t1.interrupt();
 		}
 		if (v == this.b2) {
 
 			this.fruitAnimation2.stop();
+			this.t2.interrupt();
 		}
 		if (v == this.b3) {
 
 			this.fruitAnimation3.stop();
+			this.t3.interrupt();
 		}
 		//
 
