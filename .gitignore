@@ -60,3 +60,4 @@ proguard/
 *.iws
 .idea/
 OneArmedBandit/bin/resources.ap_
+OneArmedBandit/bin/dexedLibs/android-support-v4-6cd4e3d3c199aa1b791f307b799de43f.jar
