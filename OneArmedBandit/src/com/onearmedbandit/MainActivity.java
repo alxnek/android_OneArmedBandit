@@ -1,9 +1,10 @@
 package com.onearmedbandit;
 
-
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -16,9 +17,9 @@ public class MainActivity extends Activity implements OnClickListener
 {
 
 	private final static String TAG = "MainActivity";
-	
-	private MyThread t1,t2,t3 = null;
-	
+
+	private MyThread t1, t2, t3 = null;
+
 	AnimationDrawable fruitAnimation1, fruitAnimation2, fruitAnimation3;
 	ImageView fruitView1, fruitView2, fruitView3;
 	Button b1, b2, b3, bStart;
@@ -114,4 +115,70 @@ public class MainActivity extends Activity implements OnClickListener
 
 	}
 
+
+	public Handler myHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg)
+		{
+
+			super.handleMessage(msg);
+
+			String str = msg.getData().getString(MyThread.MSG_STRING);
+
+			Log.v(TAG, "Got MESSAGE FROM HANDLER " + str);
+
+			 if (Integer.parseInt(str)== 10){
+			
+				 MainActivity.this.fruitAnimation1.stop();
+				 MainActivity.this.t1.interrupt();
+			 }
+			 if (Integer.parseInt(str)== 12){
+					
+				 MainActivity.this.fruitAnimation2.stop();
+				 MainActivity.this.t2.interrupt();
+			 }
+			 if (Integer.parseInt(str)== 14){
+					
+				 MainActivity.this.fruitAnimation3.stop();
+				 MainActivity.this.t3.interrupt();
+			 }
+		}
+
+	};
+
+	class MyThread extends Thread
+	{
+		public static final String MSG_STRING = "string";
+
+		@Override
+		public void run()
+		{
+
+			int count = 0;
+
+			while (true) {
+
+				Message msg = MainActivity.this.myHandler.obtainMessage();
+
+				Bundle data = new Bundle();
+				data.putString(MSG_STRING, "" + count);
+				msg.setData(data);
+				msg.sendToTarget();
+
+				try {
+
+					Thread.sleep(1000);
+
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+					break;
+				}
+				count++;
+
+			}
+
+		}
+	}
 }
