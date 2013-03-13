@@ -2,10 +2,12 @@ package com.onearmedbandit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,14 +28,17 @@ public class MainActivity extends Activity implements OnClickListener
 	AnimationDrawable fruitAnimation1, fruitAnimation2, fruitAnimation3;
 	ImageView fruitView1, fruitView2, fruitView3;
 	Button b1, b2, b3, bStart;
-
+	String ListPreference;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 		Log.v(TAG, "Create layout");
-
+		
+		this.getPrefs();
+		
 		this.bStart = (Button) this.findViewById(R.id.buttonStart);
 		this.bStart.setOnClickListener(this);
 
@@ -89,6 +94,15 @@ public class MainActivity extends Activity implements OnClickListener
 		return true; //
 	}
 
+	 private void getPrefs() {
+         // Get the xml/preferences.xml preferences
+         SharedPreferences prefs = PreferenceManager
+                         .getDefaultSharedPreferences(getBaseContext());
+
+         ListPreference = prefs.getString("bet_list", "1");
+         Log.v(TAG, "bet_list value loaded-> "+ ListPreference);
+	 }
+	 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
