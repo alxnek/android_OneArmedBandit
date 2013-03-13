@@ -17,4 +17,9 @@
         <item>20</item>
     </string-array>
 
+    <string name="threeEqual">JACKPOT: %1$d €</string>
+    <string name="nonEqual">You are a LOSER!</string>
+    <string name="twoEquals">%1$d and %2$d are equal: %3$d €</string>
+    <string name="bet_menu">Set your bet in €</string>
+
 </resources>

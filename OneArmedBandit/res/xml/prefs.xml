@@ -5,8 +5,8 @@
         android:defaultValue="1"
         android:entries="@array/possible_bets"
         android:entryValues="@array/possible_bets"
+        android:icon="@android:drawable/ic_menu_edit"
         android:key="bet_list"
-        android:title="Place your bet" >
-    </ListPreference>
+        android:title="@string/bet_menu" />
 
 </PreferenceScreen>

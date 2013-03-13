@@ -77,8 +77,11 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		
+		
 		switch (item.getItemId())
 		{
+//			this shit is for launch the preferences teh other list
 			case R.id.itemPrefs:
 				startActivity(new Intent(this, PrefsActivity.class));
 				break;
