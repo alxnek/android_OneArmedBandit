@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference android:summary="@string/money" android:title="5" android:key="5"/>
+    <ListPreference android:key="1" android:summary="@string/money" android:title="1"/>
+    <ListPreference android:key="2" android:summary="@string/money" android:title="2"/>
+    <ListPreference android:key="10" android:summary="@string/money" android:title="10"/>
+    <ListPreference android:key="20" android:summary="@string/money" android:title="20"/>
+    
+
+</PreferenceScreen>

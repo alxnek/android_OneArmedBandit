@@ -7,5 +7,6 @@
     <string name= "desc">Description of the view </string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
+    <string name="money">Bet\'s money</string>
 
 </resources>
