@@ -1,12 +1,15 @@
 package com.onearmedbandit;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,13 +73,34 @@ public class MainActivity extends Activity implements OnClickListener
 		return super.onTouchEvent(event);
 	}
 
+	// Called when an options item is clicked
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case R.id.itemPrefs:
+				startActivity(new Intent(this, PrefsActivity.class));
+				break;
+		}
+		return true; //
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		this.getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		MenuInflater inflater = getMenuInflater(); //
+		inflater.inflate(R.menu.menu, menu); //
+		return true; //
 	}
+
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu)
+	// {
+	// // Inflate the menu; this adds items to the action bar if it is present.
+	// this.getMenuInflater().inflate(R.menu.main, menu);
+	// return true;
+	// }
 
 	@Override
 	public void onClick(View v)
@@ -115,7 +139,6 @@ public class MainActivity extends Activity implements OnClickListener
 
 	}
 
-
 	public Handler myHandler = new Handler() {
 
 		@Override
@@ -128,21 +151,21 @@ public class MainActivity extends Activity implements OnClickListener
 
 			Log.v(TAG, "Got MESSAGE FROM HANDLER " + str);
 
-			 if (Integer.parseInt(str)== 10){
-			
-				 MainActivity.this.fruitAnimation1.stop();
-				 MainActivity.this.t1.interrupt();
-			 }
-			 if (Integer.parseInt(str)== 12){
-					
-				 MainActivity.this.fruitAnimation2.stop();
-				 MainActivity.this.t2.interrupt();
-			 }
-			 if (Integer.parseInt(str)== 14){
-					
-				 MainActivity.this.fruitAnimation3.stop();
-				 MainActivity.this.t3.interrupt();
-			 }
+			if (Integer.parseInt(str) == 10) {
+
+				MainActivity.this.fruitAnimation1.stop();
+				MainActivity.this.t1.interrupt();
+			}
+			if (Integer.parseInt(str) == 12) {
+
+				MainActivity.this.fruitAnimation2.stop();
+				MainActivity.this.t2.interrupt();
+			}
+			if (Integer.parseInt(str) == 14) {
+
+				MainActivity.this.fruitAnimation3.stop();
+				MainActivity.this.t3.interrupt();
+			}
 		}
 
 	};
