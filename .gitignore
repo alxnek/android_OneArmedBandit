@@ -1,34 +1,5 @@
-OneArmedBandit/bin/classes.dex
-OneArmedBandit/bin/OneArmedBandit.apk
-
 #ignore thumbnails created by windows
 Thumbs.db
-#Ignore files build by Visual Studio
-*.obj
-*.exe
-*.pdb
-*.user
-*.aps
-*.pch
-*.vspscc
-*_i.c
-*_p.c
-*.ncb
-*.suo
-*.tlb
-*.tlh
-*.bak
-*.cache
-*.ilk
-*.log
-[Bb]in
-[Dd]ebug*/
-*.lib
-*.sbr
-obj/
-[Rr]elease*/
-_ReSharper*/
-[Tt]est[Rr]esult*
 
 # built application files
 *.apk
@@ -59,5 +30,3 @@ proguard/
 *.ipr
 *.iws
 .idea/
-OneArmedBandit/bin/resources.ap_
-OneArmedBandit/bin/dexedLibs/android-support-v4-6cd4e3d3c199aa1b791f307b799de43f.jar
