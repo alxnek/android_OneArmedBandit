@@ -4,7 +4,7 @@
     <item
         android:id="@+id/itemPrefs"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/bet_menu" android:checked="true">
+        android:title="@string/bet_menu" android:checked="true" android:menuCategory="system">
     </item>
 
 </menu>
