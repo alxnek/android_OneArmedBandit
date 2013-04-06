@@ -1,5 +1,7 @@
 package com.onearmedbandit;
 
+import javax.xml.datatype.Duration;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener
 {
@@ -25,20 +28,22 @@ public class MainActivity extends Activity implements OnClickListener
 
 	private MyThread t1, t2, t3 = null;
 
+	boolean t1running, t2running, t3running = false;
+
 	AnimationDrawable fruitAnimation1, fruitAnimation2, fruitAnimation3;
 	ImageView fruitView1, fruitView2, fruitView3;
 	Button b1, b2, b3, bStart;
 	String ListPreference;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 		Log.v(TAG, "Create layout");
-		
+
 		this.getPrefs();
-		
+
 		this.bStart = (Button) this.findViewById(R.id.buttonStart);
 		this.bStart.setOnClickListener(this);
 
@@ -82,11 +87,10 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		
-		
+
 		switch (item.getItemId())
 		{
-//			this shit is for launch the preferences teh other list
+		// this shit is for launch the preferences teh other list
 			case R.id.itemPrefs:
 				startActivity(new Intent(this, PrefsActivity.class));
 				break;
@@ -94,15 +98,15 @@ public class MainActivity extends Activity implements OnClickListener
 		return true; //
 	}
 
-	 private void getPrefs() {
-         // Get the xml/preferences.xml preferences
-         SharedPreferences prefs = PreferenceManager
-                         .getDefaultSharedPreferences(getBaseContext());
+	private void getPrefs()
+	{
+		// Get the xml/preferences.xml preferences
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-         ListPreference = prefs.getString("bet_list", "1");
-         Log.v(TAG, "bet_list value loaded-> "+ ListPreference);
-	 }
-	 
+		ListPreference = prefs.getString("bet_list", "1");
+		Log.v(TAG, "bet_list value loaded-> " + ListPreference);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -129,8 +133,10 @@ public class MainActivity extends Activity implements OnClickListener
 			this.fruitAnimation3.start();
 			this.t1 = new MyThread();
 			this.t1.start();
+			// t1running = true;
 			this.t2 = new MyThread();
 			this.t2.start();
+			// Log.v(TAG, "vivo? "+t2.isAlive());
 			this.t3 = new MyThread();
 			this.t3.start();
 		}
@@ -139,18 +145,22 @@ public class MainActivity extends Activity implements OnClickListener
 
 			this.fruitAnimation1.stop();
 			this.t1.interrupt();
+			
 		}
 		if (v == this.b2) {
 
 			this.fruitAnimation2.stop();
 			this.t2.interrupt();
+		
 		}
 		if (v == this.b3) {
 
 			this.fruitAnimation3.stop();
 			this.t3.interrupt();
+			
 		}
-		//
+		
+		this.ifAllStoped_check();
 
 		// TODO Auto-generated method stub
 
@@ -165,6 +175,7 @@ public class MainActivity extends Activity implements OnClickListener
 			super.handleMessage(msg);
 
 			String str = msg.getData().getString(MyThread.MSG_STRING);
+			boolean checked = false;
 
 			Log.v(TAG, "Got MESSAGE FROM HANDLER " + str);
 
@@ -172,23 +183,72 @@ public class MainActivity extends Activity implements OnClickListener
 
 				MainActivity.this.fruitAnimation1.stop();
 				MainActivity.this.t1.interrupt();
+				checked = MainActivity.this.ifAllStoped_check();
+
 			}
 			if (Integer.parseInt(str) == 12) {
 
 				MainActivity.this.fruitAnimation2.stop();
 				MainActivity.this.t2.interrupt();
+				checked = MainActivity.this.ifAllStoped_check();
+
 			}
 			if (Integer.parseInt(str) == 14) {
 
 				MainActivity.this.fruitAnimation3.stop();
 				MainActivity.this.t3.interrupt();
+				checked = MainActivity.this.ifAllStoped_check();
+
 			}
+
 		}
 
 	};
 
+	/**
+	 * Checks if all the animations are stoped, if so, check scores
+	 * 
+	 * @return boolean
+	 */
+	public boolean ifAllStoped_check()
+	{
+
+		boolean stoped = false;
+
+		if (!this.fruitAnimation1.isRunning() && !this.fruitAnimation2.isRunning()
+				&& !this.fruitAnimation3.isRunning()) {
+			stoped = true;
+			this.checkScore();
+		}
+		return stoped;
+	}
+
+	/**
+	 * Check the score
+	 */
+	public void checkScore()
+	{
+
+		if (this.fruitAnimation1.getCurrent().equals(fruitAnimation2)
+				&& this.fruitAnimation1.getCurrent().equals(fruitAnimation3)) {
+			Toast.makeText(this, "GREAT. 3/3 Max price", Toast.LENGTH_LONG).show();
+
+		}
+		else if (this.fruitAnimation1.getCurrent().equals(fruitAnimation2)
+				|| this.fruitAnimation1.getCurrent().equals(fruitAnimation3)) {
+			Toast.makeText(this, "Nice. 2/3 Normal price", Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(this, "Fail :( Try again!!", Toast.LENGTH_LONG).show();
+		}
+
+		Log.v(TAG, "Stuff checked =) ");
+
+	}
+
 	class MyThread extends Thread
 	{
+
 		public static final String MSG_STRING = "string";
 
 		@Override
