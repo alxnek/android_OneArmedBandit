@@ -1,7 +1,5 @@
 package com.onearmedbandit;
 
-import javax.xml.datatype.Duration;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +32,8 @@ public class MainActivity extends Activity implements OnClickListener
 	ImageView fruitView1, fruitView2, fruitView3;
 	Button b1, b2, b3, bStart;
 	String ListPreference;
+	int bet;
+	int money = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -92,7 +92,7 @@ public class MainActivity extends Activity implements OnClickListener
 		{
 		// this shit is for launch the preferences teh other list
 			case R.id.itemPrefs:
-				startActivity(new Intent(this, PrefsActivity.class));
+				this.startActivity(new Intent(this, PrefsActivity.class));
 				break;
 		}
 		return true; //
@@ -101,16 +101,17 @@ public class MainActivity extends Activity implements OnClickListener
 	private void getPrefs()
 	{
 		// Get the xml/preferences.xml preferences
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
 
-		ListPreference = prefs.getString("bet_list", "1");
-		Log.v(TAG, "bet_list value loaded-> " + ListPreference);
+		this.ListPreference = prefs.getString("bet_list", "1");
+		Log.v(TAG, "bet_list value loaded-> " + this.ListPreference);
+		this.bet = Integer.parseInt(this.ListPreference);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		MenuInflater inflater = getMenuInflater(); //
+		MenuInflater inflater = this.getMenuInflater(); //
 		inflater.inflate(R.menu.menu, menu); //
 		return true; //
 	}
@@ -145,21 +146,21 @@ public class MainActivity extends Activity implements OnClickListener
 
 			this.fruitAnimation1.stop();
 			this.t1.interrupt();
-			
+
 		}
 		if (v == this.b2) {
 
 			this.fruitAnimation2.stop();
 			this.t2.interrupt();
-		
+
 		}
 		if (v == this.b3) {
 
 			this.fruitAnimation3.stop();
 			this.t3.interrupt();
-			
+
 		}
-		
+
 		this.ifAllStoped_check();
 
 		// TODO Auto-generated method stub
@@ -229,17 +230,22 @@ public class MainActivity extends Activity implements OnClickListener
 	public void checkScore()
 	{
 
-		if (this.fruitAnimation1.getCurrent().equals(fruitAnimation2)
-				&& this.fruitAnimation1.getCurrent().equals(fruitAnimation3)) {
-			Toast.makeText(this, "GREAT. 3/3 Max price", Toast.LENGTH_LONG).show();
+		if (this.fruitAnimation1.getCurrent().equals(this.fruitAnimation2)
+				&& this.fruitAnimation1.getCurrent().equals(this.fruitAnimation3)) {
+
+			this.money += this.bet * 50;
+			Toast.makeText(this, "GREAT! 3/3. Your $-> " + this.money, Toast.LENGTH_LONG).show();
 
 		}
-		else if (this.fruitAnimation1.getCurrent().equals(fruitAnimation2)
-				|| this.fruitAnimation1.getCurrent().equals(fruitAnimation3)) {
-			Toast.makeText(this, "Nice. 2/3 Normal price", Toast.LENGTH_LONG).show();
+		else if (this.fruitAnimation1.getCurrent().equals(this.fruitAnimation2)
+				|| this.fruitAnimation1.getCurrent().equals(this.fruitAnimation3)) {
+
+			this.money += this.bet * 5;
+			Toast.makeText(this, "Nice. 2/3. Your $-> " + this.money, Toast.LENGTH_LONG).show();
 		}
 		else {
-			Toast.makeText(this, "Fail :( Try again!!", Toast.LENGTH_LONG).show();
+			this.money -= this.bet;
+			Toast.makeText(this, ":( Try again! Your $-> " + this.money, Toast.LENGTH_LONG).show();
 		}
 
 		Log.v(TAG, "Stuff checked =) ");
