@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -232,19 +233,21 @@ public class MainActivity extends Activity implements OnClickListener
 	 */
 	public void checkScore()
 	{
-
-		if (this.fruitAnimation1.getCurrent().equals(this.fruitAnimation2)
-				&& this.fruitAnimation1.getCurrent().equals(this.fruitAnimation3)) {
+		
+		if (this.getFrame(fruitAnimation1)==this.getFrame(fruitAnimation2)
+				&& this.getFrame(fruitAnimation1)==this.getFrame(fruitAnimation3)) {
 
 			this.money += this.bet * 50;
 			Toast.makeText(this, "GREAT! 3/3. Your $-> " + this.money, Toast.LENGTH_LONG).show();
+			
 
 		}
-		else if (this.fruitAnimation1.getCurrent().equals(this.fruitAnimation2)
-				|| this.fruitAnimation1.getCurrent().equals(this.fruitAnimation3)) {
+		else if (this.getFrame(fruitAnimation1)==this.getFrame(fruitAnimation2)
+				|| this.getFrame(fruitAnimation1)==this.getFrame(fruitAnimation3)) {
 
 			this.money += this.bet * 5;
 			Toast.makeText(this, "Nice. 2/3. Your $-> " + this.money, Toast.LENGTH_LONG).show();
+			
 		}
 		else {
 			this.money -= this.bet;
@@ -253,6 +256,30 @@ public class MainActivity extends Activity implements OnClickListener
 
 		Log.v(TAG, "Stuff checked =) "+"-"+money+"-"+bet);
 
+	}
+	
+	/**
+	 * 
+	 * @param ad Animation Drawable
+	 * @return int of the frame (actual drawable img)
+	 */
+	public int getFrame(AnimationDrawable ad){
+		
+		// The variable that will guard the frame number
+		int frameNumber = 0;
+		// Get the frame of the animation
+		Drawable currentFrame, checkFrame;
+		currentFrame = ad.getCurrent();		
+		
+		// Checks the position of the frame
+		for (int i = 0; i < ad.getNumberOfFrames(); i++) {
+		    checkFrame = ad.getFrame(i);
+		    if (checkFrame == currentFrame) {
+		        frameNumber = i;
+		        break;
+		    }
+		}
+		return frameNumber;
 	}
 
 	class MyThread extends Thread
