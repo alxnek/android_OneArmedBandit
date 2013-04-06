@@ -129,6 +129,9 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		if (v == this.bStart) {
 
+			//get prefs 
+			this.getPrefs();
+			
 			this.fruitAnimation1.start();
 			this.fruitAnimation2.start();
 			this.fruitAnimation3.start();
@@ -248,7 +251,7 @@ public class MainActivity extends Activity implements OnClickListener
 			Toast.makeText(this, ":( Try again! Your $-> " + this.money, Toast.LENGTH_LONG).show();
 		}
 
-		Log.v(TAG, "Stuff checked =) ");
+		Log.v(TAG, "Stuff checked =) "+"-"+money+"-"+bet);
 
 	}
 
